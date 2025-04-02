@@ -71,27 +71,48 @@ fi
 python
 
 
-def custom_sort(arr):
+def sort(arr):
     for i in range(len(arr)):
-        for j in range(i + 1, len(arr)):
-            if arr[i] > arr[j]:
-                arr[i], arr[j] = arr[j], arr[i]
+        for j in range(i+1,len(arr)):
+            if arr[i]>arr[j]:
+                arr[i], arr[j]=arr[j], arr[i]
     return arr
+arr=list(map(int,input("Enter the number to sort: ").split()))
+sort(arr)
+print(arr)
 
 # 12. Factorial using recursion
-def factorial(n):
-    return 1 if n == 0 else n * factorial(n - 1)
+def fact(n):
+    if n==0:
+        return 1
+    else:
+        return n*fact(n-1)
+n=int(input("Enter a number to find factorial: "))
+f=fact(n)
+print("(",n,")!= ",f)
+
 
 # 13. Password complexity check
-def check_password(password):
-    import re
-    strength = 0
-    if len(password) >= 8: strength += 1
-    if re.search("[a-z]", password): strength += 1
-    if re.search("[A-Z]", password): strength += 1
-    if re.search("\d", password): strength += 1
-    if re.search("[!@#$%^&*()_+=]", password): strength += 1
-    return "Weak" if strength <= 2 else "Strong" if strength >= 4 else "Moderate"
+def chkpass(p):
+    rate=0
+    l=len(p)
+    if l>=8:
+        rate+=1
+    if l>=12:
+        rate+=1
+    if any(c.islower() for c in p):
+        rate+=1
+    if any(c.isupper() for c in p):
+        rate+=1
+    if any(c.isdigit() for c in p):
+        rate+=1
+    if any(c in "!@#$%^&*()_-+=" for c in p):
+        rate+=1
+    return rate
+p=input("Enter password to test complexity: ")
+rating=chkpass(p)
+print("Rating is: ",rating,"/10")
+
 
 # 14. Primality testing using Miller-Rabin
 def miller_rabin(n, k=5):
@@ -116,22 +137,36 @@ def miller_rabin(n, k=5):
     return True
 
 # 15. MD5 Hashing
-def md5_hash(text):
-    import hashlib
-    return hashlib.md5(text.encode()).hexdigest()
+import hashlib
+s=input("Enetr a string: ")
+hashval=hashlib.md5(s.encode()).hexdigest()
+print(hashval)
 
 # 16. Check for dark web presence
 def check_dark_web(url):
     return url.endswith(".onion")
 
 # 17. Pseudo random number generation
-def pseudo_random(seed):
-    seed = (seed * 1103515245 + 12345) & 0x7FFFFFFF
+seed=12345
+a=1664525
+c=1013904223
+m=2**32
+def rand_num():
+    global seed
+    seed=(a*seed + c)%m
     return seed
+for i in range(10):
+    print(rand_num())
 
 # 18. List images & PDFs in a directory
-def list_images_pdfs(directory):
-    import os
-    return [f for f in os.listdir(directory) if f.endswith(('.png', '.jpg', '.jpeg', '.pdf'))]
+import os
+dir_path=input("Enter path: ")
+extensions=(".pdf",".jpeg",".gif")
+if not os.path.exists(dir_path):
+    print("Fuck off")
+else:
+    for i in os.listdir(dir_path):
+        if i.lower().endswith(extensions):
+            print(i)
 
 
