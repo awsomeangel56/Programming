@@ -1,7 +1,7 @@
-#include<stdio.h>
+#include <stdio.h>
 int total;
 struct process{
-    int pid,priority,bt,wt,tat;
+    int pid,bt,wt,tat,priority;
 }p[20];
 void sort(){
     struct process temp;
@@ -23,43 +23,27 @@ void findtime(){
         p[i].tat=p[i].wt+p[i].bt;
     }
 }
-void printGanttChart() {
-    printf("\nGantt Chart:\n| ");
-    int t = 0;
-    for (int i = 0; i < total; i++) {
-        printf("P%d\t|", p[i].pid);
-        t += p[i].bt;
-    }
-    printf("\n0\t"); 
-    t = 0;
-    for (int i = 0; i < total; i++) {
-        t += p[i].bt;
-        printf("%d\t", t);
-    }
-    printf("\n");
-}
 void main(){
-    printf("enter number of process \n");
+    printf("Enter the no. of processes: ");
     scanf("%d",&total);
-
     for(int i=0;i<total;i++){
         p[i].pid=i+1;
-        printf("enter priority of P%d ",p[i].pid);
+        printf("Enter priority of P%d: ",i+1);
         scanf("%d",&p[i].priority);
-        printf("enter burst time of P%d ",p[i].pid);
+        printf("Enter burst time of P%d: ",i+1);
         scanf("%d",&p[i].bt);
-
     }
-    sort();
-    findtime();
-    printGanttChart();
-    float avgtat,avgwt;
-    for(int i=0;i<total;i++){
-        avgwt+=p[i].wt;
-        avgtat+=p[i].tat;
-    }
-    avgwt/=total;
-    avgtat/=total;
-    printf("Avg Waiting Time:%.2f ms",avgwt);
-    printf("Avg Turnaround Time:%.2f ms",avgtat);
+sort();
+findtime();
+float avgtat=0,avgwt=0;
+printf("\nProcess\tBurst time\tPriority\tTurn around time\tWaiting time\t\n");
+for(int i=0;i<total;i++){
+    avgtat+=p[i].tat;
+    avgwt+=p[i].wt;
+    printf("P%d\t\t%d\t\t%d\t\t%d\t\t%d\t\t\n",p[i].pid,p[i].bt,p[i].priority,p[i].tat,p[i].wt);
+}
+avgtat/=total;
+avgwt/=total;
+printf("\nAverage turn around time: %f",avgtat);
+printf("\nAvergae waiting time: %f",avgwt);
 }

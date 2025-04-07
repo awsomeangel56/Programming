@@ -3,26 +3,19 @@
 int total, bt[20], wt[20], tat[20], q, pid[20];
 
 void findwt() {
-    int rembt[total];
+    int rembt[20];
     for (int i = 0; i < total; i++)
         rembt[i] = bt[i];
     int t = 0;
-    printf("\nGantt Chart:\n");
-    printf("|");
-    int time[30],index=0;
     while (1) {
         int done = 1;
         for (int i = 0; i < total; i++) {
             if (rembt[i] > 0) {
                 done = 0;
                 if (rembt[i] > q) {
-                    printf("P%d\t|", pid[i]);
-                    time[index++]=t;
                     t += q;
                     rembt[i] -= q;
                 } else {
-                    printf(" P%d\t|", pid[i]);
-                    time[index++]=t;
                     t += rembt[i];
                     wt[i] = t - bt[i];
                     rembt[i] = 0;
@@ -32,10 +25,6 @@ void findwt() {
         if (done == 1)
             break;
     }
-    time[index++] = t;
-    printf("\n");
-    for(int i=0;i<index;i++)
-        printf("%d\t",time[i]);
 }
 
 void findtat() {

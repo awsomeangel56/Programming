@@ -11,7 +11,7 @@ void sort(int arr[],int n){
         }
     }
 }
-void cscan(int req[],int n,int head, int size){
+void scan(int req[],int n, int head, int size){
     int i,seek=0;
     sort(req,n);
     for(i=0;i<n && req[i]<head;i++);
@@ -19,13 +19,13 @@ void cscan(int req[],int n,int head, int size){
         seek+=abs(req[j]-head);
         head=req[j];
     }
-    seek+=abs((size-1)-head)+(size-1);
-    head=0;
-    for(int j=0;j<i;j++){
+    seek+=abs((size-1)-head);
+    head=size-1;
+    for(int j=i-1;j>=0;j--){
         seek+=abs(req[j]-head);
         head=req[j];
     }
-    printf("CSCAN seek: %d",seek);
+    printf("SCAN seek: %d",seek);
 }
 int main(){
     int n,req[100],head,size;
@@ -39,6 +39,6 @@ int main(){
     scanf("%d",&head);
     printf("Enter disk size: ");
     scanf("%d",&size);
-cscan(req,n,head,size);
+scan(req,n,head,size);
 
 }

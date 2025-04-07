@@ -21,22 +21,6 @@ void findtat(){
     for(int i=0;i<total;i++)
         tat[i]=bt[i]+wt[i];
 }
-void printGanttChart() {
-    printf("\nGantt Chart:\n ");
-    int t = 0;
-    printf("|");
-    for (int i = 0; i < total; i++) {
-        printf(" P%d |", pid[i]);
-        t += bt[i];
-    }
-    printf("\n0");
-    t = 0;
-    for (int i = 0; i < total; i++) {
-        t += bt[i];
-        printf("     %d", t);
-    }
-    printf("\n");
-}
 void findat(){
     int totalwt=0,totaltat=0;
         printf("Process\tBurst Time\tWaiting Time\tTurnaround Time\n");
@@ -62,6 +46,5 @@ void main(){
     sort();
     findwt();
     findtat();
-    printGanttChart();
     findat();
 }
